@@ -135,11 +135,9 @@ Para o XGBoost, utilizar um número maior de árvores, uma taxa de aprendizagem 
 
 **Num contexto Geral para toda a análise:**
 - **Otimização de Hiperparâmetros:** Em todos os casos, a busca pelos melhores hiperparâmetros para ajustar os modelos.
-- **Feature Engineering:** A exploração de novas características para melhorar a capacidade preditiva do modelo.
-- **Análise de Resíduos:** Compreensão das áreas em que os modelos estão falhando para ajustes adicionais.
-- **Ensemble Weight Tuning:** Ajuste dos pesos dos modelos no ensemble para otimizar o desempenho geral.
-- **Cross-Validation Folds:** Aumentar o número de folds na validação cruzada pode fornecer uma avaliação mais estável do desempenho do modelo.
-- **Avaliação Individual:** Examinação do desempenho de cada modelo individualmente para insights específicos.
+- **Feature Engineering:** A exploração de novas características para melhorar a capacidade preditiva do modelo e compreensão das áreas em que os modelos estão falhando para ajustes adicionais.
+- **Tuning:** Ajuste dos pesos dos modelos no ensemble para otimizar o desempenho geral.
+- **Cross-Validation:** Aumentar o número de folds na validação cruzada pode fornecer uma avaliação mais estável do desempenho do modelo.
 - **Tratamento de Outliers:** Tratamento de outliers para evitar distorções nos resultados.
 - **Experimentação com Outros Modelos:** Exploração diferentes algoritmos para determinar o mais adequado ao seu conjunto de dados (utilizar um "pycaret" da vida por exemplo).
 
