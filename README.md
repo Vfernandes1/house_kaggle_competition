@@ -105,3 +105,42 @@ O conteúdo de aprendizado de treinamento é modelado a partir de alguns algorit
 - Os algoritmos Árvores de Decisão, KNN, Ridge, SVM são fáceis de interpretar individualmente. O Random Forest e Boosted Trees são mais desafiadores devido à natureza combinada das previsões.
 A Interpretabilidade do Stacking depende do meta-modelo escolhido e o XGBoost é o mais difícil de interpretar, sendo um método de boosting.
 
+**Otimização e Aprimoramento do Modelo**
+
+Ao explorar e entender os algoritmos e suas implementações podemos especular alguns ajustes para otimizar o desempenho, a interpretabilidade e generalização da análise. Primeiramente, faremos esta análise para cada um dos algoritmos utilizados:
+
+**Árvores de Decisão:**
+- Como possibilidade para aumento da performance e interpretabilidade nas Árvores de Decisão, é possível aplicar a técnica de seleção de atributos 'SelectKBest' e otimização de hiperparâmetros usando GridSearchCV. O objetivo é reduzir a dimensionalidade dos dados e encontrar os melhores valores para 'max_depth' e 'min_samples_leaf'.
+
+**KNN:**
+Incrementação do "BallTree" e a técnica de seleção de atributos 'SelectKBest' para aprimorar a performance e interpretabilidade do modelo.
+
+**Ridge:**
+No caso do modelo Ridge, uso do algoritmo de otimização L-BFGS e incrementação da técnica de regularização para evitar o overfitting. A busca pelos melhores hiperparâmetros, especialmente o coeficiente de regularização 'alpha', é conduzida utilizando GridSearchCV.
+
+**SVM:**
+Utilizar um kernel "Polynomial" e técnicas de regularização, para aprimorar o modelo e para melhorar sua performance. A busca por hiperparâmetros, incluindo 'C', 'epsilon', e 'degree', é realizada através do GridSearchCV.
+
+**Random Forest:**
+Para Random Forest, é possível aumentar o número de árvores para melhorar a precisão e utilizar RandomizedSearchCV para encontrar os melhores valores de hiperparâmetros, como 'n_estimators', 'max_depth' e 'min_samples_leaf'.
+
+**Boosted Trees:**
+No contexto de Boosted Trees, é possível ajustar a taxa de aprendizagem e o número de árvores. O uso do GridSearchCV facilita a busca pelos melhores valores dos hiperparâmetros para aprimorar o desempenho do modelo.
+
+**Stacking:**
+Ao implementar o Stacking, utilizar um meta-modelo com regressão linear e um número maior de modelos base. A otimização dos hiperparâmetros pode também ser realizada com RandomizedSearchCV para encontrar configurações ideais.
+
+**XGBoost:**
+Para o XGBoost, utilizar um número maior de árvores, uma taxa de aprendizagem menor e o uso de early stopping para evitar o overfitting. A busca por hiperparâmetros, especialmente 'max_depth', é conduzida através do GridSearchCV.
+
+**Num contexto Geral para toda a análise:**
+- **Otimização de Hiperparâmetros:** Em todos os casos, a busca pelos melhores hiperparâmetros para ajustar os modelos.
+- **Feature Engineering:** A exploração de novas características para melhorar a capacidade preditiva do modelo.
+- **Análise de Resíduos:** Compreensão das áreas em que os modelos estão falhando para ajustes adicionais.
+- **Ensemble Weight Tuning:** Ajuste dos pesos dos modelos no ensemble para otimizar o desempenho geral.
+- **Cross-Validation Folds:** Aumentar o número de folds na validação cruzada pode fornecer uma avaliação mais estável do desempenho do modelo.
+- **Avaliação Individual:** Examinação do desempenho de cada modelo individualmente para insights específicos.
+- **Tratamento de Outliers:** Tratamento de outliers para evitar distorções nos resultados.
+- **Experimentação com Outros Modelos:** Exploração diferentes algoritmos para determinar o mais adequado ao seu conjunto de dados (utilizar um "pycaret" da vida por exemplo).
+
+Essas estratégias combinadas podem aprimorar a performance do modelo.
