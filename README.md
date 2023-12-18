@@ -16,6 +16,8 @@
 
 A atividade proposta no Desafio Kaggle Open Challenge consiste no entendimento e inferência do tipo de análise em relação aos padrões dentro de dados não consolidados.
 
+## Entendimento do Conteúdo
+
 Em específico o desafio "House Prices" (com fonte de dados relacionada as informações de casas) tem como objetivo a previsão dos preços de imóveis, indo além das características convencionais consideradas por compradores ao descrever a casa dos sonhos. O conjunto de dados é composto por 79 variáveis que abrangem praticamente todos os aspectos e configurações das residências em Ames, Iowa, e visa antecipar o preço final de cada casa. 
 
 Neste contexto diferentemente das preferências comuns, como o número de quartos ou a presença de uma cerca branca, este conjunto de dados inclui elementos adicionais, como a altura do teto do porão ou a proximidade de uma ferrovia leste-oeste. A avaliação dos modelos submetidos é baseada no Root-Mean-Squared-Error (RMSE), calculado entre o logaritmo do valor previsto e o logaritmo do preço observado de vendas. Essa abordagem logarítmica visa equalizar os impactos de erros na previsão de casas caras e baratas.
@@ -51,3 +53,55 @@ Já o arquivo "trainer", há a definição da classe "Trainer", responsável pel
 Os testes fornecidos na classe TestSubmissionBaseline visam avaliar diferentes aspectos da submissão de previsões de preços de casas no contexto de um desafio Kaggle. A biblioteca nbresult é utilizada para comparar os resultados obtidos com os resultados esperados, armazenados em arquivos pickle. Nos testes é incluído a verificação da pontuação do modelo, do formato da submissão, das colunas na submissão e dos tipos de dados das colunas na submissão.
 
 Os conjuntos de dados associados ao desafio incluem train.csv (conjunto de treinamento), test.csv (conjunto de teste), data_description.txt (descrição completa de cada coluna, originalmente preparada por Dean De Cock), e sample_submission.csv (uma submissão de referência a partir de uma regressão linear sobre o ano e mês da venda, área do lote em pés quadrados e número de quartos). Os campos dessas bases de dados abrangem uma variedade de características, incluindo informações sobre a construção, zoneamento, tamanho do lote, tipo de acesso, configuração do lote, localização, qualidade e condição geral, ano de construção, entre outros. A variável alvo é SalePrice, representando o preço de venda da propriedade em dólares.
+
+## Algoritmos de Treinamento
+
+O código no arquivo "houses_kaggle_competition.ipynb" oferece oito métodos de treinamento, cada um com sua breve descrição:
+
+### Árvore de Decisão:
+Pode ser definido num algoritmo que toma decisões com base em regras hierárquicas:
+
+- **Parâmetros importantes:** max_depth (profundidade máxima) e min_samples_leaf (número mínimo de amostras em uma folha).
+
+### KNN (K-Nearest Neighbors):
+Algoritmo que é utilizado em problemas de classificação, como neste caso em específico, basicamente define pontos com base na proximidade com os "vizinhos" mais próximos.
+
+### Ridge (Regressão Linear com Regularização L2):
+Extensão da regressão linear com termo de regularização L2. Sensível à escala dos recursos e útil para evitar overfitting.
+
+### SVM (Support Vector Machine):
+Algoritmo parecido com a definição classificatório do knn, ele busca uma linha de separação entre duas classes distintas analisando os dois pontos, um de cada grupo, mais próximos da outra classe.
+
+### Random Forest:
+Algoritmo que combina vários modelos de machine learning em um único resultado. Ele utiliza um conjunto de "árvores de decisão" treinadas de forma independentemente. Esse modo pode reduzir o overfitting e capturar relações não lineares.
+
+### Boosted Trees (AdaBoost e Gradient Boosting):
+Algoritmos que utiliza a replicação de modelos "fracos" como método para consolidar suas previsões.
+
+### Stacking:
+Algoritmo que combina previsões de vários modelos usando um meta-modelo. Pode melhorar o desempenho, mas pode ser considerado exaustivo computacionalmente.
+
+### XGBoost:
+Implementação otimizada de Gradient Boosting com eficiência computacional e tratamento de dados ausentes.
+
+## Diferenças na seleção de algoritmos e particularidades (feito com os modelos mais consolidados)
+
+O conteúdo de aprendizado de treinamento é modelado a partir de alguns algoritmos. Todos eles possuem métodos de treinamento diferentes, e foram selecionados tendo isso em mente. As principais diferenças de treinamento entre esses métodos são respectivamente: a Natureza do Aprendizado, a Configuração de Hiperparâmetros, a Complexidade de Treinamento e a Interpretabilidade:
+
+### Natureza do Aprendizado
+
+- Os algoritmos **Árvores de Decisão**, **KNN**, **Ridge**, **SVM** aprendem de forma independente. Já o **Random Forest** e Boosted Trees realizam coleções sequenciais de modelos fracos. O **Stacking** combina modelos individuais usando um meta-modelo e o **XGBoost** utiliza árvores de decisão como modelos base.
+
+### Configuração de Hiperparâmetros:
+
+- Cada modelo tem sua própria definição de hiperparâmetros "básicos", principalmente os algoritmos de Árvores de Decisão, KNN, Ridge e SVM. No entanto, o Random Forest e Boosted Trees têm hiperparâmetros dos modelos base e do ensemble. E o outro tipo de utilização diferente é dos algoritmos Stacking e XGBoost que têm hiperparâmetros para modelos base e meta-modelo.
+
+### Complexidade de Treinamento:
+
+- A complexidade é velocidade dos algoritmos é outro fator determinante. Os modelos individuais (Árvores de Decisão, KNN, Ridge, SVM) são relativamente simples e rápidos. Já o Random Forest e Boosted Trees são mais lentos devido à construção sequencial. O Stacking requer treinamento de vários modelos individuais e do meta-modelo, o que gera uma maior complexidade em sua construção. Por fim, o XGBoost também possui processsamento lento devido ao uso de otimização gradiente.
+
+### Interpretabilidade:
+
+- Os algoritmos Árvores de Decisão, KNN, Ridge, SVM são fáceis de interpretar individualmente. O Random Forest e Boosted Trees são mais desafiadores devido à natureza combinada das previsões.
+A Interpretabilidade do Stacking depende do meta-modelo escolhido e o XGBoost é o mais difícil de interpretar, sendo um método de boosting.
+
