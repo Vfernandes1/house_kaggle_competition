@@ -1,26 +1,49 @@
 # House Prices - Advanced Regression Techniques
 
-Olá! Se você está aqui, quer dizer que passamos da Sprint 3, maravilha! Agora vamos focar em descobrir padrões dos nossos dados, e esta atividade ponderada é perfeita para consolidarmos o nosso conhecimento. Em grupo, se juntem e entrem no site: [house_kaggle_competition](https://www.kaggle.com/competitions/house-prices-advanced-regression-techniques), leiam o desafio, baixem os dados, façam uma pequena análise e criem seus notebooks para solucionar o problema proposto. Boa sorte! Não esqueça de submeter o desafio global, vamos tentar chegar nos 100 primeiros do mundo!
+## Barema da ponderada segue:
 
-## Para que eu possa corrigir a sua ponderada, faça o `git clone` deste repositório, faça suas modificações (lembre-se que este notebook ajudará você e seu grupo à desenvolver o relatório do Artefato, em relação à ocrrelações dos dados), crie uma branch com seu nome, e faça um commit das suas modificações NA SUA BRANCH. No card coloque o link do seu commit =)
+**Desenvolvimento e Submissão de Soluções para o Desafio House Kaggle**
 
-## Claro, o Barema da ponderada segue:
+*1. Compreensão do desafio House Kaggle, incluindo o contexto e os objetivos do desafio;*
+*2. Implementação das soluções do desafio no notebook preparatório de forma que passem nos testes pré-setados;*
+*3. Utilização de técnicas, algoritmos e bibliotecas para a resolução dos problemas propostos;*
+*4. Submissão das soluções desenvolvidas ao Kaggle Open Challenge;*
+*5. Descrição dos requisitos para o desenvolvimento das soluções e compreensão do desafio House Kaggle;*
+*6. Explicação detalhada do desenvolvimento das soluções, avaliação, otimização e submissão ao Kaggle utilizando comentários no código;*
 
-Desenvolvimento e Submissão de Soluções para o Desafio House Kaggle
+## Aluno: Vinícius Oliveira Fernandes
+### Professor: Afonso Cesar Lelis Brandão
 
-1. Compreensão do desafio House Kaggle, incluindo o contexto e os objetivos do desafio;
-2. Implementação das soluções do desafio no notebook preparatório de forma que passem nos testes pré-setados;
-3. Utilização de técnicas, algoritmos e bibliotecas para a resolução dos problemas propostos;
-4. Submissão das soluções desenvolvidas ao Kaggle Open Challenge;
-5. Descrição dos requisitos para o desenvolvimento das soluções e compreensão do desafio House Kaggle;
-6. Explicação detalhada do desenvolvimento das soluções, avaliação, otimização e submissão ao Kaggle utilizando comentários no código;
+A atividade proposta no Desafio Kaggle Open Challenge consiste no entendimento e inferência do tipo de análise em relação aos padrões dentro de dados não consolidados.
 
-A escrita do texto deve ser clara, precisa e livre de erros ortográficos. Será descontado até 20% dos pontos caso sejam encontrados erros de ortografia.
+Em específico o desafio "House Prices" (com fonte de dados relacionada as informações de casas) tem como objetivo a previsão dos preços de imóveis, indo além das características convencionais consideradas por compradores ao descrever a casa dos sonhos. O conjunto de dados é composto por 79 variáveis que abrangem praticamente todos os aspectos e configurações das residências em Ames, Iowa, e visa antecipar o preço final de cada casa. 
 
-Avançado (9,1 - 10): cumpriu todos os 6 itens descritos acima;
+Neste contexto diferentemente das preferências comuns, como o número de quartos ou a presença de uma cerca branca, este conjunto de dados inclui elementos adicionais, como a altura do teto do porão ou a proximidade de uma ferrovia leste-oeste. A avaliação dos modelos submetidos é baseada no Root-Mean-Squared-Error (RMSE), calculado entre o logaritmo do valor previsto e o logaritmo do preço observado de vendas. Essa abordagem logarítmica visa equalizar os impactos de erros na previsão de casas caras e baratas.
 
-Intermediário (7,1 - 9): cumpriu 5 dos 6 itens descritos acima;
+Segue estruturas de pastas do projeto são: 
 
-Básico (4,1 - 7): cumpriu 4 dos 6 itens descritos acima;
+- Pasta **data** com os conjuntos de dados, contendo os "arquivos houses_test_raw.csv" e "houses_train_raw.csv" os dados brutos de teste e treinamento, respectivamente.
+- Pasta **houses_trainer_package:** com scripts e arquivos para treinamento do modelo. Segue lista de arquivos que está dentro da pasta:
 
-Insuficiente (0 - 4): cumpriu menos que 3 itens descritos acima.
+    - **__init__.py:** Arquivo para inicializar o pacote.
+    - **pipeline.py:** Pré-processamento e modelagem.
+    - **preprocessors.py:** Transformações específicas dos dados.
+    - **trainer.py:** Arquivo de treinamento do modelo.
+    - **.ipynb_checkpoints:** Pasta gerada automaticamente para armazenar estados salvos dos notebooks Jupyter.
+    - **tests:** Contém scripts de teste e arquivos pickle associados à avaliação do modelo e validação dos resultados.
+    - **.gitignore:** Arquivo utilizado para especificar quais arquivos ou tipos de arquivo devem ser ignorados pelo Git.
+    - **autotest.sh:** Script shell usado para automatizar testes.
+
+## Funcionalidades e Estruturação dos arquivos
+
+Alguns dos arquivos contém funções que possuem uma importância significante para tratamento dos dados e estruturação de todo o pipeline. Um das funções mais importantes para o modelo são as funções de pré-processo, como o arquivo "preprocessors" com funções específicas, direcionadas para o pré-processamento dos dados. 
+
+- As funções do arquivo realizam transformações específicas para variáveis ordinais, numéricas e nominais, preparando os dados para o treinamento do modelo. O uso do OrdinalEncoder transforma variáveis ordinais em números, respeitando a ordem especificada. O pipeline resultante inclui imputação de valores faltantes, codificação ordinal e aplicação da escala Min-Max. A função create_preproc_numerical concentra-se em variáveis numéricas, utilizando um pipeline que realiza imputação de valores faltantes usando KNNImputer e aplica a escala Min-Max. A função create_preproc_nominal lida com variáveis nominais, empregando um pipeline que realiza imputação de valores faltantes usando a estratégia "most_frequent" e aplica codificação one-hot com OneHotEncoder. Esses pré-processadores são posteriormente integrados ao pipeline principal, conforme definido no arquivo pipeline.
+
+No arquivo trainer, uma classe chamada Trainer é apresentada, sendo responsável pelo treinamento e avaliação de um modelo de regressão. Além da utilização de funções de pré-processamento, destaca-se a realização da validação cruzada para avaliar o desempenho do modelo, calculando a raiz quadrada do erro médio quadrático (RMSLE) como métrica de avaliação. O método imprime a média e o desvio padrão do RMSLE para as dobras de validação cruzada. A instância é criada, os dados brutos são carregados, o pipeline é construído aplicando o pré-processamento e a modelagem, e, por fim, é realizada a validação cruzada para avaliar o desempenho do modelo.
+
+O arquivo pipeline é fundamental para o pré-processamento e modelagem de dados em um contexto de aprendizado de máquina. A função create_preproc desempenha um papel crucial na definição de etapas de pré-processamento, utilizando pré-processadores para variáveis ordinais, numéricas e nominais. A função create_model é responsável pela criação de modelos de regressão, incluindo Gradient Boosting Regressor, Ridge Regression, Support Vector Machine Regressor e AdaBoost Regressor com Decision Tree como estimador base. Por fim, a função de pré-processamento é unificada ao modelo em um único pipeline usando a função make_pipeline. Esse pipeline completo facilita o treinamento e a avaliação de modelos em conjuntos de dados específicos, fornecendo uma abordagem organizada e eficiente para lidar com tarefas de aprendizado de máquina.
+
+Os testes fornecidos na classe TestSubmissionBaseline visam avaliar diferentes aspectos da submissão de previsões de preços de casas no contexto de um desafio Kaggle. A biblioteca nbresult é utilizada para comparar os resultados obtidos com os resultados esperados, armazenados em arquivos pickle. Os testes incluem a verificação da pontuação do modelo, do formato da submissão, das colunas na submissão e dos tipos de dados das colunas na submissão.
+
+Os conjuntos de dados associados ao desafio incluem train.csv (conjunto de treinamento), test.csv (conjunto de teste), data_description.txt (descrição completa de cada coluna, originalmente preparada por Dean De Cock), e sample_submission.csv (uma submissão de referência a partir de uma regressão linear sobre o ano e mês da venda, área do lote em pés quadrados e número de quartos). Os campos dessas bases de dados abrangem uma variedade de características, incluindo informações sobre a construção, zoneamento, tamanho do lote, tipo de acesso, configuração do lote, localização, qualidade e condição geral, ano de construção, entre outros. A variável alvo é SalePrice, representando o preço de venda da propriedade em dólares.
